@@ -43,34 +43,31 @@ window.findNRooksSolution = function(n) {
 
 
   var results = [];
-  var createRow = function (board, row) {
+  var createRow = function (board, rowCount) {
     board = board || new Board({n: n});
-    row = row || 0;
-    var innerResults = [];
+    rowCount = rowCount || 0;
     for (var i = 0; i < n; i++) {
-      if (row === n) {
-        results.push(innerResults);
+      if (rowCount === n) {
+        console.log('board', board.rows());
+        results.push(board.rows());
+        return;
       }
 
-      //var temp = board.rows()[row][i];
-      //if (board.rows()[row]) {
-        console.log('row', board.rows()[row])
-        board.rows()[row][i] = 1; //.togglePiece();
-        if (board.hasRowConflictAt(row) || board.hasColConflictAt(i)) {
-          board.rows()[row][i] = 0;//.togglePiece();
-        } 
-      //}
-      console.log(board);
-      createRow(board, row + 1);
+      board.rows()[rowCount][i] = 1; 
+      if (board.hasRowConflictAt(rowCount) || board.hasColConflictAt(i)) {
+        board.rows()[rowCount][i] = 0;
+      } 
     }
+    createRow(board, rowCount + 1);
   };
   createRow(new Board({n: n}), 0);
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(results));
-  return results;
+  console.log('results', results);
+  return results[0];
 
 };
 
-// return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
+// return the number of nxn chessboards that exist, with n rooks placed such that no[1]]ne of them can attack each other
 window.countNRooksSolutions = function(n) {
   //create counter variable
   // var counter = 0;
