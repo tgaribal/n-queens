@@ -47,13 +47,13 @@ window.countNRooksSolutions = function(n) {
   var createRow = function (rowCount) {
     //board = board || new Board({n: n});
     //rowCount = rowCount || 0;
-      if (rowCount === n) {
+    if (rowCount === n) {
         //if (!board.hasAnyRooksConflicts()) {
-        nCount++;
-        results.push(board.rows());
+      nCount++;
+      results.push(board.rows());
         //}
-        return;
-      }
+      return;
+    }
     for (var i = 0; i < n; i++) {
 
       board.togglePiece(rowCount, i); 
@@ -70,8 +70,35 @@ window.countNRooksSolutions = function(n) {
 };
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
-window.findNQueensSolution = function(n) {
-
+window.findNQueensSolution = function(n) {  
+  var results = [];
+  var board = new Board ({n: n});
+  var nCount = 0;
+  var createRow = function (rowCount) {
+    if (rowCount === n) {
+      //console.log("inside", board.rows()[rowCount][i]);
+      results.push(board.rows());
+      return; //board.rows();
+    }
+    for (var i = 0; i < n; i++) {
+      //console.log("board before", board.rows()[rowCount][i]);
+      board.togglePiece(rowCount, i);
+      nCount++;
+      //console.log('board after', board.rows()[rowCount][i]);
+      if (!board.hasAnyQueensConflicts()) {
+        //console.log("something")
+        if(nCount === n) {
+          return board.rows();
+        }
+        createRow(rowCount + 1);
+      } 
+      nCount--;
+      board.togglePiece(rowCount, i);    
+    }
+  };
+  createRow(0);
+  console.log('Number of solutions for ' + n + ' queens:', board.rows());
+  return board.rows();
 };
 
 
@@ -84,13 +111,13 @@ window.countNQueensSolutions = function(n) {
   var createRow = function (rowCount) {
     //board = board || new Board({n: n});
     //rowCount = rowCount || 0;
-      if (rowCount === n) {
+    if (rowCount === n) {
         //if (!board.hasAnyRooksConflicts()) {
-        nCount++;
-        results.push(board.rows());
+      nCount++;
+      results.push(board.rows());
         //}
-        return;
-      }
+      return;
+    }
     for (var i = 0; i < n; i++) {
 
       board.togglePiece(rowCount, i); 
