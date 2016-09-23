@@ -87,17 +87,20 @@ window.findNQueensSolution = function(n) {
       //console.log('board after', board.rows()[rowCount][i]);
       if (!board.hasAnyQueensConflicts()) {
         //console.log("something")
-        if(nCount === n) {
-          return board.rows();
-        }
         createRow(rowCount + 1);
+        if (nCount === n) {
+          return;
+        }
       } 
-      nCount--;
-      board.togglePiece(rowCount, i);    
+      //return board.rows();
+      board.togglePiece(rowCount, i);
+      nCount--;    
+      
     }
   };
   createRow(0);
   console.log('Number of solutions for ' + n + ' queens:', board.rows());
+  console.log(board.rows());
   return board.rows();
 };
 
